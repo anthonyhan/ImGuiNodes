@@ -4,7 +4,7 @@ a fork of the gist from https://gist.github.com/ChemistAion/0cd64b71711d81661344
 
 original author: [ChemistAion](https://github.com/ChemistAion)
 
-this repository is created for better version control and generation of its c-api wrapper.
+this repository is created for better version control and generation of its [c-api wrapper](https://github.com/anthonyhan/cimgui_nodes).
 
 ## Usage
 ```
