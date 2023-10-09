@@ -1,6 +1,7 @@
 #include "nodes.h"
+#include <cmath>
 
-namespace ImGui
+namespace IMGUINODES_NAMESPACE
 {
 	void ImGuiNodes::UpdateCanvasGeometry(ImDrawList* draw_list)
 	{
@@ -20,7 +21,7 @@ namespace ImGui
 
 		////////////////////////////////////////////////////////////////////////////////
 
-		if (ImGui::IsKeyPressed(io.KeyMap[ImGuiKey_Home]))
+		if (ImGui::IsKeyPressed(ImGuiKey_Home))
 		{
 			scroll_ = {};
 			scale_ = 1.0f;
@@ -702,7 +703,7 @@ namespace ImGui
 
 		////////////////////////////////////////////////////////////////////////////////
 		
-		if (ImGui::IsKeyPressed(io.KeyMap[ImGuiKey_Delete]))
+		if (ImGui::IsKeyPressed(ImGuiKey_Delete))
 		{
 			ImVector<ImGuiNodesNode*> nodes;
 			nodes.reserve(nodes_.size());

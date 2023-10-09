@@ -1,11 +1,30 @@
 #pragma once
 
+#ifndef IMGUINODES_NAMESPACE
+#define IMGUINODES_NAMESPACE ImGuiNodesNS
+#endif
+
+#ifndef IMGUI_DEFINE_MATH_OPERATORS
 #define IMGUI_DEFINE_MATH_OPERATORS
+#endif // !IMGUI_DEFINE_MATH_OPERATORS
 
 #include "imgui.h"
 #include "imgui_internal.h"
 
-namespace ImGui
+
+	// fixme: move "unsigned int" typedefs out of namespace, 
+	// because the generator can not properly process this.
+	////////////////////////////////////////////////////////////////////////////////
+
+	typedef unsigned int ImGuiNodesConnectorType;
+	typedef unsigned int ImGuiNodesNodeType;
+
+	typedef unsigned int ImGuiNodesConnectorState;
+	typedef unsigned int ImGuiNodesNodeState;
+
+	typedef unsigned int ImGuiNodesState;
+
+namespace IMGUINODES_NAMESPACE
 {
 	////////////////////////////////////////////////////////////////////////////////
 
@@ -63,25 +82,15 @@ namespace ImGui
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	typedef unsigned int ImGuiNodesConnectorType;
-	typedef unsigned int ImGuiNodesNodeType;
-
-	typedef unsigned int ImGuiNodesConnectorState;
-	typedef unsigned int ImGuiNodesNodeState;
-
-	typedef unsigned int ImGuiNodesState;
-
-	////////////////////////////////////////////////////////////////////////////////
-
 	// connector text name heights factors
-	constexpr float ImGuiNodesConnectorDotDiameter = 0.7f; // connectors dot diameter
-	constexpr float ImGuiNodesConnectorDotPadding = 0.35f; // connectors dot left/right sides padding
-	constexpr float ImGuiNodesConnectorDistance = 1.5f; // vertical distance between connectors centers
+	const float ImGuiNodesConnectorDotDiameter = 0.7f; // connectors dot diameter
+	const float ImGuiNodesConnectorDotPadding = 0.35f; // connectors dot left/right sides padding
+	const float ImGuiNodesConnectorDistance = 1.5f; // vertical distance between connectors centers
 	
 	// title text name heights factors
-	constexpr float ImGuiNodesHSeparation = 1.7f; // extra horizontal separation inbetween IOs
-	constexpr float ImGuiNodesVSeparation = 1.5f; // total IOs area separation from title and node bottom edge
-	constexpr float ImGuiNodesTitleHight = 2.0f;
+	const float ImGuiNodesHSeparation = 1.7f; // extra horizontal separation inbetween IOs
+	const float ImGuiNodesVSeparation = 1.5f; // total IOs area separation from title and node bottom edge
+	const float ImGuiNodesTitleHight = 2.0f;
 
 	struct ImGuiNodesNode;
 	struct ImGuiNodesInput;
@@ -434,7 +443,7 @@ namespace ImGui
 	////////////////////////////////////////////////////////////////////////////////
 
 	//ImGuiNodesConnectionDesc size round up to 32 bytes to be cache boundaries friendly
-	constexpr int ImGuiNodesNamesMaxLen = 32 - sizeof(ImGuiNodesConnectorType);
+	#define ImGuiNodesNamesMaxLen (32 - sizeof(ImGuiNodesConnectorType))
 
 	struct ImGuiNodesConnectionDesc
 	{
@@ -456,7 +465,8 @@ namespace ImGui
 
 	struct ImGuiNodes
 	{
-	private:
+    // fixme: make private functions internal.
+	// private:
 		ImVec2 mouse_;
 		ImVec2 pos_;
 		ImVec2 size_;
@@ -480,8 +490,8 @@ namespace ImGui
 		ImVector<ImGuiNodesNodeDesc> nodes_desc_;
 
 		////////////////////////////////////////////////////////////////////////////////
-	
-	private:
+	// fixme: make private functions internal.
+	// private:
 		void UpdateCanvasGeometry(ImDrawList* draw_list);
 		ImGuiNodesNode* UpdateNodesFromCanvas();
 		ImGuiNodesNode* CreateNodeFromDesc(ImGuiNodesNodeDesc* desc, ImVec2 pos);
@@ -535,7 +545,12 @@ namespace ImGui
 			////////////////////////////////////////////////////////////////////////////////
 
 			{
-				ImGuiNodesNodeDesc desc("Test", ImGuiNodesNodeType_Generic, ImColor(0.2, 0.3, 0.6, 0.0f));
+				// ImGuiNodesNodeDesc desc("Test", ImGuiNodesNodeType_Generic, ImColor(0.2, 0.3, 0.6, 0.0f));
+                ImGuiNodesNodeDesc desc;
+                strncpy(desc.name_, "Test", sizeof(desc.name_)-1);
+                desc.type_ = ImGuiNodesNodeType_Generic;
+                desc.color_ = ImColor(0.2f, 0.3f, 0.6f, 0.0f);
+
 				nodes_desc_.push_back(desc);
 			
 				desc.inputs_.push_back({ "Float", ImGuiNodesConnectorType_Float });
@@ -550,7 +565,11 @@ namespace ImGui
 			}
 
 			{
-				ImGuiNodesNodeDesc desc("InputBox", ImGuiNodesNodeType_Generic, ImColor(0.3, 0.5, 0.5, 0.0f));
+				// ImGuiNodesNodeDesc desc("InputBox", ImGuiNodesNodeType_Generic, ImColor(0.3, 0.5, 0.5, 0.0f));
+                ImGuiNodesNodeDesc desc;
+                strncpy(desc.name_, "InputBox", sizeof(desc.name_) - 1);
+                desc.type_ = ImGuiNodesNodeType_Generic;
+                desc.color_ = ImColor(0.3f, 0.5f, 0.5f, 0.0f);
 				nodes_desc_.push_back(desc);
 			
 				desc.inputs_.push_back({ "Float1", ImGuiNodesConnectorType_Float });
@@ -576,7 +595,11 @@ namespace ImGui
 			}
 			
 			{
-				ImGuiNodesNodeDesc desc("OutputBox", ImGuiNodesNodeType_Generic, ImColor(0.4, 0.3, 0.5, 0.0f));
+				// ImGuiNodesNodeDesc desc("OutputBox", ImGuiNodesNodeType_Generic, ImColor(0.4, 0.3, 0.5, 0.0f));
+                ImGuiNodesNodeDesc desc;
+                strncpy(desc.name_, "OutputBox", sizeof(desc.name_) - 1);
+                desc.type_ = ImGuiNodesNodeType_Generic;
+                desc.color_ = ImColor(0.4f, 0.3f, 0.5f, 0.0f);
 				nodes_desc_.push_back(desc);
 			
 				desc.inputs_.push_back({ "GenericSink1", ImGuiNodesConnectorType_Generic });
