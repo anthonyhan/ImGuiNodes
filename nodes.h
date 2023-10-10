@@ -327,7 +327,7 @@ namespace IMGUINODES_NAMESPACE
 
 			const ImVec2 outline(4.0f * scale, 4.0f * scale);
 
-			const ImDrawFlags rounding_corners_flags = ImDrawCornerFlags_All;
+			const ImDrawFlags rounding_corners_flags = ImDrawFlags_RoundCornersAll;
 
 			if (state_ & ImGuiNodesNodeStateFlag_Disabled)
 			{
@@ -347,7 +347,7 @@ namespace IMGUINODES_NAMESPACE
 			if (false == (state_ & ImGuiNodesNodeStateFlag_Collapsed))
 				draw_list->AddLine(ImVec2(node_rect.Min.x, head.y), ImVec2(head.x - 1.0f, head.y), ImColor(0.0f, 0.0f, 0.0f, 0.5f), 2.0f);
 		
-			const ImDrawFlags head_corners_flags = state_ & ImGuiNodesNodeStateFlag_Collapsed ? rounding_corners_flags : ImDrawCornerFlags_Top;
+			const ImDrawFlags head_corners_flags = state_ & ImGuiNodesNodeStateFlag_Collapsed ? rounding_corners_flags : ImDrawFlags_RoundCornersTop;
 			draw_list->AddRectFilled(node_rect.Min, head, head_color, rounding, head_corners_flags);	
 
 			////////////////////////////////////////////////////////////////////////////////
@@ -508,7 +508,7 @@ namespace IMGUINODES_NAMESPACE
 			p2 += (ImVec2(-line, 0.0f) * scale_);
 			p3 += (ImVec2(+line, 0.0f) * scale_);
 
-			draw_list->AddBezierCurve(p1, p2, p3, p4, color, 1.5f * scale_);
+			draw_list->AddBezierCubic(p1, p2, p3, p4, color, 1.5f * scale_);
 		}
 
 		inline bool ConnectionMatrix(ImGuiNodesNode* input_node, ImGuiNodesNode* output_node, ImGuiNodesInput* input, ImGuiNodesOutput* output)
